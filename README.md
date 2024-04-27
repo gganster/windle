@@ -1,8 +1,13 @@
-# React + Vite
+# Projet Windle - Multi Window Wordle
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Dev - Instructions
+1 - npm install
+2 - npm run dev
+3 - code
 
-Currently, two official plugins are available:
+### Usage - Instructions
+1 - Click here to install web app in PWA mode. Status : ON
+2 - Check you windows is in your main monitor (the new window API doesn't work with side monitors)
+3 - Click on the button below to start the game
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+PS: if popups are stuck, add autorisations to app to launch multiples-popup (asked in browser navbar)

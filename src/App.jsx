@@ -25,11 +25,15 @@ function App() {
         <span> Status : {isPWA ? <span className='font-semibold text-green-400'>ON</span>: <span className='font-semibold text-red-600'>OFF</span>}</span>
 
         <p className="mt-2">
-          2 - Check you windows is in your main monitor (the new window API doesn't work with side monitors)
+          2 - Check you windows is in your main monitor (the new window API doesn&apos;t work with side monitors)
         </p>
 
         <p className="mt-2">
           3 - Click on the button below to start the game
+        </p>
+
+        <p className="mt-2">
+          PS: if popups only one popup appears, add autorisations to app to launch multiple popups (asked in browser navbar)
         </p>
 
         {ctx.wordleState === "waiting" ?

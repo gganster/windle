@@ -24,7 +24,6 @@ export function WindleProvider({ children }) {
   /*--------------------- EVENT MANAGER ------------------------*/
   
   const _keyPressDispatcher = (e) => {
-    console.log(e.keyCode, e.key)
     if (e.key === "Enter") return checkGuess();
     if (e.key === "Backspace") return delChar();
     if (e.keyCode < 65 || e.keyCode > 90) return;
@@ -62,7 +61,6 @@ export function WindleProvider({ children }) {
 
   useEffect(() => {
     if (!ctx.pwaInitialized || !ctx.windowsInitialized || ctx.wordleState === "waiting") return;
-    console.log("rendering");
 
     ctx.guesses.forEach((guess, i) => {
       guess.forEach((c, j) => {
@@ -89,12 +87,13 @@ export function WindleProvider({ children }) {
       ...ctx,
       windowsInitialized: true,
       wordleState: "playing",
-      solution: WORDS[Math.floor(Math.random() * WORDS.length)],
+      //solution: WORDS[Math.floor(Math.random() * WORDS.length)],
+      solution: "belle",
       currentGuess: "",
       guesses: [],
       history: []
     });
-    console.log(ctx.solution);
+    console.log("Solution is:", ctx.solution);
   }
   const endGame = () => {
     closeAllWindows();
