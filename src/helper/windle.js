@@ -24,7 +24,7 @@ export const checkGuess = (currentGuess, solution) => {
 
   //check yellow in second (right letter, wrong place), if not green
   res = res.map((r) => {
-    if (r.color === "red" && lettersCount[r.char] > 0) {
+    if (r.color === "grey" && lettersCount[r.char] > 0) {
       lettersCount[r.char]--;
       return {...r, color: "yellow"};
     }

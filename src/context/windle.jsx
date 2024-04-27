@@ -3,6 +3,7 @@ import * as PT from "prop-types";
 import { checkGuess as helpCheckGuess } from "../helper/windle";
 import useWindows from "../hooks/useWindows";
 import WORDS from "../WORDS";
+import sleep from "../helper/sleep";
 
 const WindleContext = createContext();
 const defaultState = {
@@ -43,21 +44,73 @@ export function WindleProvider({ children }) {
   }
   const checkGuess = () => {
     if (ctx.currentGuess.length !== 5) return console.log("invalid guess");
-    if (ctx.guesses.length === 6) return console.log("no more guesses");
 
     const res = helpCheckGuess(ctx.currentGuess, ctx.solution);
+    const newState = res.filter(r => r.color === "green").length === 5 ? "won" : 
+                     ctx.history.length === 5 ? "lost" 
+                     : "playing";
 
     setCtx({
       ...ctx,
       guesses: [...ctx.guesses, res],
       history: [...ctx.history, ctx.currentGuess],
       currentGuess: "",
-      wordleState: res.filter(r => r.color === "green").length === 5 ? "won" : ctx.guesses.length === 6 ? "lost" : "playing"
+      wordleState: newState
     });
+
+    if (newState === "won") wonAnimation();
+    if (newState === "lost") loseAnimation();
   }
 
   /*-------------------- RENDER MANAGER -------------------------*/
   const { openWindows, closeAllWindows, setWindowState} = useWindows({onKeyPress: _keyPressDispatcher});
+
+  const wonAnimation = async () => {
+    //display "you won" in the center of the screen
+    await sleep(500);
+  
+    for (let i = 0; i < 6; i++) {
+      for (let j = 0; j < 5; j++) {
+        setWindowState(
+          i, 
+          j, 
+          "green",
+          i === 1 && j === 1 ? "Y" : 
+          i === 1 && j === 2 ? "O" :
+          i === 1 && j === 3 ? "U" :
+          i === 2 && j === 1 ? "W" :
+          i === 2 && j === 2 ? "O" :
+          i === 2 && j === 3 ? "N" :
+          " "
+        );
+        await sleep(200);
+      }
+    }
+  }
+
+  const loseAnimation = async () => {
+    //display "you won" in the center of the screen
+    await sleep(500);
+  
+    for (let i = 0; i < 6; i++) {
+      for (let j = 0; j < 5; j++) {
+        setWindowState(
+          i, 
+          j, 
+          "red",
+          i === 1 && j === 1 ? "Y" : 
+          i === 1 && j === 2 ? "O" :
+          i === 1 && j === 3 ? "U" :
+          i === 2 && j === 1 ? "L" :
+          i === 2 && j === 2 ? "O" :
+          i === 2 && j === 3 ? "S" :
+          i === 2 && j === 4 ? "E" :
+          " "
+        );
+        await sleep(200);
+      }
+    }
+  }
 
   useEffect(() => {
     if (!ctx.pwaInitialized || !ctx.windowsInitialized || ctx.wordleState === "waiting") return;
@@ -70,7 +123,6 @@ export function WindleProvider({ children }) {
     //if necessary, print current guess
     if (ctx.guesses.length < 6 && ctx.currentGuess.length >= 0) {
       for (let i = 0; i < 6; i++) {
-        console.log("setting", i, ctx.currentGuess.length, "white", " ");
         setWindowState(ctx.guesses.length, i, "white", " ");
       }
       ctx.currentGuess.split("").forEach((c, i) => {
@@ -88,7 +140,7 @@ export function WindleProvider({ children }) {
       windowsInitialized: true,
       wordleState: "playing",
       //solution: WORDS[Math.floor(Math.random() * WORDS.length)],
-      solution: "belle",
+      solution: "ville",
       currentGuess: "",
       guesses: [],
       history: []
