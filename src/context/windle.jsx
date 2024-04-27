@@ -139,8 +139,8 @@ export function WindleProvider({ children }) {
       ...ctx,
       windowsInitialized: true,
       wordleState: "playing",
-      //solution: WORDS[Math.floor(Math.random() * WORDS.length)],
-      solution: "ville",
+      solution: WORDS[Math.floor(Math.random() * WORDS.length)],
+      //solution: "ville",
       currentGuess: "",
       guesses: [],
       history: []
